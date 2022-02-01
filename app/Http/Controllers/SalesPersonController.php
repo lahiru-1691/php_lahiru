@@ -23,7 +23,7 @@ class SalesPersonController extends Controller
     public function index()
     {
 
-        $salesPerson = Person::with('route')->latest()->paginate(10);
+        $salesPerson = Person::with('route')->latest()->paginate(COUNT);
         
 
         return view('SalesPerson.list')->with(compact('salesPerson'));
@@ -133,8 +133,9 @@ class SalesPersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(Request $request)
     {
-        //
+        $salesPerson   = Person::where('id', $request->get('person'))->delete();
+        return response()->json($salesPerson);
     }
 }

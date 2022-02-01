@@ -26,4 +26,6 @@ Route::post('/edit/{id}', [SalesPersonController::class, 'update'])->name('updat
 
 Route::get('/sales-person', [SalesPersonController::class, 'show'])->name('view');
 
+Route::get('/delete', [SalesPersonController::class, 'destroy'])->name('remove');
+
 

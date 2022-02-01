@@ -103,6 +103,7 @@
 </div>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.10/sweetalert2.min.js" integrity="sha512-LwESE8nE3vcnoUWmYo6skVQ+BRT5UhqnPweGro7e22RSDLVwftCfFIPt+Ha2tm1Gg7RXvYp/jPyih3DUB06PwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
 function viewPerson(id){
     var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
@@ -116,6 +117,7 @@ function viewPerson(id){
       async: false,
       success: function (data) {
         if(data){
+          $('.modal-title').text(data.name);
           $('#id').text(data.id);
           $('#name').text(data.name);
           $('#email').text(data.email);
@@ -131,7 +133,36 @@ function viewPerson(id){
         alert('error');
       }
   });
-
     myModal.show();
+}
+
+function deletePerson(id){
+    Swal.fire({
+        title: 'Do you want to delete?',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "{{URL::to('delete')}}",
+                method: 'GET',
+                data: {'person': id},
+                async: false,
+                success: function (data) {
+                    if(data == 1){
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+            Swal.fire('Deleted!', '', 'success')
+        } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+        }
+    })
+
 }
 </script>
