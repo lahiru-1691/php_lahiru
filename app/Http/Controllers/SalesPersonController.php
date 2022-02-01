@@ -50,7 +50,7 @@ class SalesPersonController extends Controller
     {
         $request->validate([
             'name'        => 'required',
-            'email'       => 'required|email',
+            'email'       => 'required|email|unique:sales_person,email,',
             'telephone'   => 'required',
             'date'        => 'required',
             'route'       => 'required'
@@ -107,7 +107,7 @@ class SalesPersonController extends Controller
     {
         $request->validate([
             'name'        => 'required',
-            'email'       => 'required|email',
+            'email'       => 'required|email|unique:sales_person,email,'.$id.',id,deleted_at,NULL',
             'telephone'   => 'required',
             'date'        => 'required',
             'route'       => 'required'
