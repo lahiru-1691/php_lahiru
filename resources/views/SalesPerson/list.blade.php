@@ -6,6 +6,11 @@
         <div class="card">
             <div class="card-header">Sales Team</div>
             <div class="card-body">
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{$message}}</p>
+                    </div>
+                @endif
                 <div class="pull-right">
                     <a class="btn btn-info pull-right" href="{{route('add')}}" title="Add New Sales Person"> <i class="fas fa-plus-circle"></i> Add New Sales Person</a>
                 </div>

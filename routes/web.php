@@ -22,4 +22,6 @@ Route::post('/add', [SalesPersonController::class, 'store'])->name('save');
 
 Route::get('/edit/{id}', [SalesPersonController::class, 'edit'])->name('edit');
 
+Route::post('/edit/{id}', [SalesPersonController::class, 'update'])->name('update');
+
 

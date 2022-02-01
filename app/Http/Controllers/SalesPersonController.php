@@ -89,7 +89,9 @@ class SalesPersonController extends Controller
      */
     public function edit($id)
     {
-        return $salesPerson = Person::find($id);
+        $salesPerson   = Person::find($id);
+        $workingRoutes = WorkingRoutes::all();
+        return view('SalesPerson.edit')->with(compact('salesPerson', 'workingRoutes'));
     }
 
     /**
@@ -99,9 +101,29 @@ class SalesPersonController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'name'        => 'required',
+            'email'       => 'required|email',
+            'telephone'   => 'required',
+            'date'        => 'required',
+            'route'       => 'required'
+        ]);
+
+        DB::transaction(function () use($id, $request){
+            $person = Person::find($id);
+            $person->name             = $request->name;
+            $person->email            = $request->email;
+            $person->telephone        = $request->telephone;
+            $person->joined_date      = $request->date;
+            $person->working_route_id = $request->route;
+            $person->comment          = $request->comments;
+            $person->save();
+
+        });
+
+        return redirect()->route('list')->with('success', 'Sales Person updated successfully.');
     }
 
     /**
