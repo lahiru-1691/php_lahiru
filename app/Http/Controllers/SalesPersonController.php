@@ -77,9 +77,11 @@ class SalesPersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        //
+        $salesPerson   = Person::with('route')->find($request->get('person'));
+        return response()->json($salesPerson);
+
     }
 
     /**

@@ -54,5 +54,84 @@
                     </div>
                 </div>
     </div>
+
+    <div class="modal" tabindex="-1" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive-lg mt-2">
+                    <tr>
+                        <td>ID</td>
+                        <td id="id"></td>
+                    </tr>
+                    <tr>
+                        <td>Full Name</td>
+                        <td id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td id="email"></td>
+                    </tr>
+                    <tr>
+                        <td>Telephone</td>
+                        <td id="telephone"></td>
+                    </tr>
+                    <tr>
+                        <td>Joined Date</td>
+                        <td id="date"></td>
+                    </tr>
+                    <tr>
+                        <td>Current Routes</td>
+                        <td id="route"></td>
+                    </tr>
+                    <tr>
+                        <td>Comments</td>
+                        <td id="comment"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+function viewPerson(id){
+    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+        keyboard: false
+    })
+
+    $.ajax({
+      url: "{{URL::to('sales-person')}}",
+      method: 'GET',
+      data: {'person': id},
+      async: false,
+      success: function (data) {
+        if(data){
+          $('#id').text(data.id);
+          $('#name').text(data.name);
+          $('#email').text(data.email);
+          $('#telephone').text(data.telephone);
+          $('#date').text(data.joined_date);
+          $('#route').text(data.route.working_route);
+          $('#comment').text(data.comment);
+
+        }
+
+      },
+      error: function () {
+        alert('error');
+      }
+  });
+
+    myModal.show();
+}
+</script>

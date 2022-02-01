@@ -24,4 +24,6 @@ Route::get('/edit/{id}', [SalesPersonController::class, 'edit'])->name('edit');
 
 Route::post('/edit/{id}', [SalesPersonController::class, 'update'])->name('update');
 
+Route::get('/sales-person', [SalesPersonController::class, 'show'])->name('view');
+
 
